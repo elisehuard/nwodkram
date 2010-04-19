@@ -54,4 +54,11 @@ describe "converting html to markdown" do
     str.should == "    def test\n      p today\n    end\n"
   end
 
+  it "should convert a h1 title" do
+    html = "<h1>title</h1>\n"
+    nwodkram = Nwodkram.new(html)
+    str = nwodkram.convert
+    str.should == "# title #\n\n"
+  end
+
 end

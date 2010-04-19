@@ -14,6 +14,10 @@ class NwodkramParser < Nokogiri::XML::SAX::Document
       result = ""
     when "code"
       result = ""
+    when "h1"
+      result = "# "
+    when "h2"
+      result = "## "
     else
       result = ""
     end
@@ -27,6 +31,10 @@ class NwodkramParser < Nokogiri::XML::SAX::Document
       result = markdown_link_end
     when "li"
       result = "\n" 
+    when "h1"
+      result = " #\n\n"
+    when "h2"
+      result = " ##\n\n"
     else
       result = ""
     end
@@ -39,10 +47,10 @@ class NwodkramParser < Nokogiri::XML::SAX::Document
       print string.chomp
     when "pre"
       string.split("\n").each {|line| 
-        if line =~ /^\s+$/
+        if line.chomp =~ /^$/
           print ""
         else
-          print "    #{line}\n"
+          print "    #{line.lstrip}\n"
         end
       }
     else
