@@ -1,10 +1,23 @@
 require File.expand_path(File.dirname(__FILE__) + "/spec_helper")
 require 'stringio'
 
+# Issue: BlueCloth surrounds every bit of html with a
 describe "converting html to markdown" do
 
   it "should not convert simple text" do
     markdown = "hello hello\n"
+    html = markdown.to_html
+    html.to_markdown.should == markdown
+  end
+
+  it "should convert emphasis" do
+    markdown = "*NO* smoking\n"
+    html = markdown.to_html
+    html.to_markdown.should == markdown
+  end
+
+  it "should convert strong" do
+    markdown = "I was **born** under a wandering star\n"
     html = markdown.to_html
     html.to_markdown.should == markdown
   end
@@ -16,9 +29,8 @@ describe "converting html to markdown" do
   end
 
   it "should convert an image" do
-    markdown = "![title](http://test.com)"
+    markdown = "![title](http://test.com)\n"
     html = markdown.to_html
-puts html
     html.to_markdown.should == markdown
   end
 
@@ -37,13 +49,28 @@ puts html
   it "should convert a pre" do
     markdown = "    def test\n      p today\n    end\n"
     html = markdown.to_html
-puts html
     html.to_markdown.should == markdown
   end
 
   it "should convert a h1 title" do
-    markdown = "# title #\n\n"
+    markdown = "# title #\n"
     html = markdown.to_html
+    html.to_markdown.should == markdown
+  end
+
+  it "should convert a h3 title" do
+    markdown = "### title ###\n"
+    html = markdown.to_html
+    html.to_markdown.should == markdown
+  end
+
+  # the ultimate test: convert the readme
+  it "should convert a whole text" do
+    markdown = File.open(File.expand_path(File.dirname(__FILE__) + "/../README.md")).read
+    html = markdown.to_html
+#File.open('before','w') {|f| f.write(markdown) }
+#File.open('during','w') {|f| f.write(html) }
+#File.open('after','w') {|f| f.write(html.to_markdown) }
     html.to_markdown.should == markdown
   end
 

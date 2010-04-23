@@ -10,7 +10,7 @@ class NwodkramParser < Nokogiri::XML::SAX::Document
     when "a"
       result = "["
     when "img"
-      result = "!["
+      result = "![#{@attr['title'] || @attr['alt']}](#{@attr['src']})"
     when "li"
       result = "* "
     when "pre"
@@ -21,6 +21,12 @@ class NwodkramParser < Nokogiri::XML::SAX::Document
       result = "# "
     when "h2"
       result = "## "
+    when "h3"
+      result = "### "
+    when "em"
+      result = "*"
+    when "strong"
+      result = "**"
     else
       result = ""
     end
@@ -33,17 +39,23 @@ class NwodkramParser < Nokogiri::XML::SAX::Document
     when "p"
       result = "\n"
     when "a"
-      result = "](#{@attr[1]})" 
+      result = "](#{@attr['href']})" 
     when "img"
-      result = "](#{@attr[1]})" 
+      result = ""
     when "li"
       result = "\n" 
     when "h1"
-      result = " #\n\n"
+      result = " #\n"
     when "h2"
-      result = " ##\n\n"
+      result = " ##\n"
+    when "h3"
+      result = " ###\n"
     when "img"
       result = ""
+    when "em"
+      result = "*"
+    when "strong"
+      result = "**"
     else
       result = ""
     end
@@ -52,12 +64,14 @@ class NwodkramParser < Nokogiri::XML::SAX::Document
 
   def characters(string)
     case @name
-    when "li", "ul", "ol"
-      print string.chomp
     when "code"
       string.split("\n").each {|line| 
         print "    #{line}\n" # 4 spaces to indicate code
       }
+    when "img"
+      print "" # image doesn't contain any children, normally
+    when 'p','h1','h2','h3', 'li'
+      print string.chomp
     else
       print string
     end
@@ -68,8 +82,13 @@ class NwodkramParser < Nokogiri::XML::SAX::Document
   end
 
   # take attribute array and make it a hash
+  # structure of attributes [key1, value2, key2, value2,...]
   def attr_hash(attributes)
-    
+    output = {}
+    attributes.each_with_index do |attr,i|
+      output[attr] = attributes[i+1] if !i.odd? and i << (attributes.size-2)
+    end    
+    output
   end
 
 end
