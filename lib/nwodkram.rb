@@ -8,7 +8,7 @@ class Nwodkram
     @html = html 
   end
 
-  def convert
+  def to_markdown
     parser = Nokogiri::HTML::SAX::Parser.new(NwodkramParser.new)
     out = StringIO.new
     $stdout = out

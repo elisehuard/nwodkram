@@ -3,11 +3,14 @@ class NwodkramParser < Nokogiri::XML::SAX::Document
   attr_accessor :attr, :name
 
   def start_element(name,attributes = [])
-    @name, @attr = name, attributes
-    result = ""
+    @name, @attr = name, attr_hash(attributes)
     case name
+    when "p"
+      result = ""
     when "a"
-      result = markdown_link_start(attributes)
+      result = "["
+    when "img"
+      result = "!["
     when "li"
       result = "* "
     when "pre"
@@ -27,14 +30,20 @@ class NwodkramParser < Nokogiri::XML::SAX::Document
   def end_element(name)
     result = ""
     case name
+    when "p"
+      result = "\n"
     when "a"
-      result = markdown_link_end
+      result = "](#{@attr[1]})" 
+    when "img"
+      result = "](#{@attr[1]})" 
     when "li"
       result = "\n" 
     when "h1"
       result = " #\n\n"
     when "h2"
       result = " ##\n\n"
+    when "img"
+      result = ""
     else
       result = ""
     end
@@ -43,15 +52,11 @@ class NwodkramParser < Nokogiri::XML::SAX::Document
 
   def characters(string)
     case @name
-    when "li"
+    when "li", "ul", "ol"
       print string.chomp
-    when "pre"
+    when "code"
       string.split("\n").each {|line| 
-        if line.chomp =~ /^$/
-          print ""
-        else
-          print "    #{line.lstrip}\n"
-        end
+        print "    #{line}\n" # 4 spaces to indicate code
       }
     else
       print string
@@ -62,14 +67,9 @@ class NwodkramParser < Nokogiri::XML::SAX::Document
     print string
   end
 
-
-  def markdown_link_start(attributes)
-    "["
-  end
-
-  def markdown_link_end
-    # puts "]: #{attributes[1]}"
-    "]: #{@attr[1]}" 
+  # take attribute array and make it a hash
+  def attr_hash(attributes)
+    
   end
 
 end
