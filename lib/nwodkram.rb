@@ -19,3 +19,9 @@ class Nwodkram
   end
 
 end
+
+class String
+  def to_markdown
+    Nwodkram.new(self).to_markdown
+  end
+end

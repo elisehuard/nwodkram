@@ -6,8 +6,10 @@ nwodkram (markdown in reverse) is a tool to reverse html into markdown.
 
 ## Usage ##
 
-    nwodkram = Nwodkram.new(string)
-    markdown = nwodkram.to_markdown
+The gem reopens class String and adds a to_markdown method.
+When valid html is given, it returns markdown.
+    html = File.open('page.html', 'r') {|f| f.read }
+    markdown = html.to_markdown
 
 ## Use case ##
 

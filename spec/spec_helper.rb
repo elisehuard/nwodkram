@@ -15,11 +15,6 @@ class String
     bc = BlueCloth.new(self)
     bc.to_html
   end
-
-  def to_markdown
-    nk = Nwodkram.new(self)
-    nk.to_markdown 
-  end
 end
 
 Rspec::Matchers.define :convert_to_html_and_back do
