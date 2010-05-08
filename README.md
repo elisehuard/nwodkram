@@ -1,5 +1,3 @@
-work in progress ...
-
 # Nwodkram #
 
 nwodkram (markdown in reverse) is a tool to reverse html into markdown.
