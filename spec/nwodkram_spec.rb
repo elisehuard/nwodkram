@@ -29,7 +29,7 @@ describe "converting html to markdown" do
   end
 
   it "should convert an image" do
-    markdown = "![title](http://test.com)\n"
+    markdown = "![title](http://test.com/lalala.jpg)\n"
     html = markdown.to_html
     html.to_markdown.should == markdown
   end
@@ -68,9 +68,6 @@ describe "converting html to markdown" do
   it "should convert a whole text" do
     markdown = File.open(File.expand_path(File.dirname(__FILE__) + "/../README.md")).read
     html = markdown.to_html
-#File.open('before','w') {|f| f.write(markdown) }
-#File.open('during','w') {|f| f.write(html) }
-#File.open('after','w') {|f| f.write(html.to_markdown) }
     html.to_markdown.should == markdown
   end
 
