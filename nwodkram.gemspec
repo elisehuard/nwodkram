@@ -1,13 +1,14 @@
 Gem::Specification.new do |s|
   s.name = 'nwodkram'
-  s.version = '0.2'
-  s.date = '2010-05-01'
+  s.version = '0.3'
+  s.date = '2010-05-12'
 
   s.description = 'Convert html into markdown'
-  s.summary = 'Convert html into markdown'
+  s.summary = 'Convert html into markdown - this might be useful when going from a traditional blog to a more text-based blog.'
 
   s.authors = ['Elise Huard']
   s.email = 'nwodkram@elisehuard.be'
+  s.homepage = 'http://github.com/elisehuard/nwodkram'
 
   s.files = %w[
               README.md
