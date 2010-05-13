@@ -67,7 +67,6 @@ describe "converting html to markdown" do
   it "should convert a blockquote" do
     markdown = "> boo !\n\n that was scary\n"
     html = markdown.to_html
-puts html
     html.to_markdown.should == markdown
   end
 
