@@ -2,16 +2,17 @@ class NwodkramParser < Nokogiri::XML::SAX::Document
 
   attr_accessor :attr, :name
 
-  MARKDOWN = { 'p'      => [""                                                               , "\n"],
-               'a'      => ["["                                                              , lambda { "](#{@attr['href']})" }],
-               'img'    => [ lambda {"![#{@attr['title'] || @attr['alt']}](#{@attr['src']})"}, ""],
-               'li'     => [ lambda { @parent == "ul" ? "* " : "1. " }                       , "\n"],
-               'code'   => [""                                                               , ""],
-               'h1'     => ["# "                                                             , " #\n" ],
-               'h2'     => ["## "                                                            , " ##\n" ],
-               'h3'     => ["### "                                                           , " ###\n"],
-               'em'     => ["*"                                                              , "*"],
-               'strong' => ["**"                                                             , "**"] }
+  MARKDOWN = { 'p'          => [""                                                               , "\n"],
+               'a'          => ["["                                                              , lambda { "](#{@attr['href']})" }],
+               'img'        => [ lambda {"![#{@attr['title'] || @attr['alt']}](#{@attr['src']})"}, ""],
+               'li'         => [ lambda { @parent == "ul" ? "* " : "1. " }                       , "\n"],
+               'code'       => [""                                                               , ""],
+               'h1'         => ["# "                                                             , " #\n" ],
+               'h2'         => ["## "                                                            , " ##\n" ],
+               'h3'         => ["### "                                                           , " ###\n"],
+               'em'         => ["*"                                                              , "*"],
+               'blockquote' => ["> "                                                              , ""],
+               'strong'     => ["**"                                                             , "**"] }
 
   def start_element(name,attributes = [])
     @name, @attr = name, attr_hash(attributes)
@@ -33,7 +34,7 @@ class NwodkramParser < Nokogiri::XML::SAX::Document
       }
     when "img"
       print "" # image doesn't contain any children, normally
-    when 'p','h1','h2','h3', 'li', 'ul','ol'
+    when 'p','h1','h2','h3', 'li', 'ul','ol','blockquote'
       print string.chomp
     else
       print string

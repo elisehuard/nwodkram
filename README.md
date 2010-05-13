@@ -16,7 +16,7 @@ My use case was to migrate a blog from wordpress.com to something more civilised
 ## Supports ##
 
 *tags*:
-    p, a, img, ul, ol, li, h1, h2, h3, em, strong
+    p, a, img, ul, ol, li, h1, h2, h3, em, strong, blockquote
 
 *rubies*:
 tested with MRI ruby 1.8.7 and 1.9.2 (preview1)

@@ -64,6 +64,13 @@ describe "converting html to markdown" do
     html.to_markdown.should == markdown
   end
 
+  it "should convert a blockquote" do
+    markdown = "> boo !\n\n that was scary\n"
+    html = markdown.to_html
+puts html
+    html.to_markdown.should == markdown
+  end
+
   it "should convert a text with several bits of code" do
     html = File.open(File.expand_path(File.dirname(__FILE__) + "/code_test.txt")).read
     markdown = html.to_markdown
