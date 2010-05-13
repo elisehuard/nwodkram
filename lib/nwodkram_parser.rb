@@ -20,6 +20,7 @@ class NwodkramParser < Nokogiri::XML::SAX::Document
   end
 
   def end_element(name)
+    @name = name
     MARKDOWN[name] ? print(local_value(MARKDOWN[name][1])) : print("")
   end
 
@@ -35,8 +36,7 @@ class NwodkramParser < Nokogiri::XML::SAX::Document
     when 'p','h1','h2','h3', 'li', 'ul','ol'
       print string.chomp
     else
-      # getting rid of annoying newlines
-      string[0] == 10 ? print("\n") : print(string)
+      print string
     end
   end
 

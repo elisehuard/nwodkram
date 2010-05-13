@@ -1,0 +1,13 @@
+<pre><code>Install the library or try one of the following options to extconf.rb:
+--with-xml2-dir=/path/to/libxml2
+--with-xml2-lib=/path/to/libxml2/lib
+--with-xml2-include=/path/to/libxml2/include</code></pre>
+
+The solution is very, very simple.
+<pre><code>sudo apt-get install libxml2
+sudo apt-get install libxml2-dev</code></pre>
+
+(and maybe an 
+<pre><code>sudo ldconfig -v</code></pre>
+for good measure)
+(especially that last one gets the C includes needed to build libxml-ruby).

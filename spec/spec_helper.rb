@@ -5,7 +5,7 @@ require 'rubygems'
 require 'spec'
 require 'nwodkram'
 require 'bluecloth' # markdown converter to test against
-require 'rspec/matchers'
+require 'spec/matchers'
 
 Spec::Runner.configure do |config|
 end
@@ -17,7 +17,7 @@ class String
   end
 end
 
-Rspec::Matchers.define :convert_to_html_and_back do
+Spec::Matchers.define :convert_to_html_and_back do
   match do |markdown|
     html = markdown.to_html
     html.to_markdown == markdown

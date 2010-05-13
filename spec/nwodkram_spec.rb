@@ -64,6 +64,12 @@ describe "converting html to markdown" do
     html.to_markdown.should == markdown
   end
 
+  it "should convert a text with several bits of code" do
+    html = File.open(File.expand_path(File.dirname(__FILE__) + "/code_test.txt")).read
+    markdown = html.to_markdown
+    markdown.to_html.should == html
+  end
+
   # the ultimate test: convert the readme
   it "should convert a whole text" do
     markdown = File.open(File.expand_path(File.dirname(__FILE__) + "/../README.md")).read
